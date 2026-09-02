@@ -16,6 +16,12 @@ int main() {
     }
 
     std::string inFile = entry.path().string();
+
+    if (hasHeader(inFile)) {
+      std::cout << "Skipping: " << inFile << " (header already exists)\n";
+      continue;
+    }
+
     std::string tempFile = inFile + "_temp";
 
     std::string baseFilename = entry.path().filename().string();
