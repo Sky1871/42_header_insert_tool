@@ -1,5 +1,5 @@
 HIT
-data/*
+data/header_config
 
 # Prerequisites
 *.d
