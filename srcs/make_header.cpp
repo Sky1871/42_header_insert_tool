@@ -47,7 +47,7 @@ CommentStyle getStyle(const std::string& filename) {
   return {"#", "#", '*', 80};
 }
 
-std::string makeHeader(const std::string& filename) {
+std::string makeHeader(const std::string& filename, std::string existingCreated = "") {
   // 1. Get environment variables
   const char* user_env = std::getenv("USER");
   std::string user = user_env ? user_env : "marvin";
@@ -64,7 +64,12 @@ std::string makeHeader(const std::string& filename) {
 
   // 3. Prepare the text variables
   std::string author = "By: " + user + " <" + mail + ">";
-  std::string created = "Created: " + date + " by " + user;
+  std::string created;
+  if (!existingCreated.empty()) {
+    created = existingCreated;
+  } else {
+    created = "Created: " + date + " by " + user;
+  }
   std::string updated = "Updated: " + date + " by " + user;
 
   const std::string ascii[7] = {

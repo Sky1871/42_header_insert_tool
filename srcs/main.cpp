@@ -20,16 +20,10 @@ int main(int argc, char **argv) {
     }
 
     std::string inFile = entry.path().string();
-
-    if (hasHeader(inFile)) {
-      std::cout << "Skipping: " << inFile << " (header already exists)\n";
-      continue;
-    }
-
     std::string tempFile = inFile + "_temp";
 
+    bool headerExists = hasHeader(inFile);
     std::string baseFilename = entry.path().filename().string();
-    std::string header = makeHeader(baseFilename);
 
     std::ifstream in(inFile);
     if (!in.is_open()) {
@@ -38,13 +32,48 @@ int main(int argc, char **argv) {
     }
 
     std::ofstream out(tempFile);
-    if (!out.is_open()) {
-      std::cerr << "Error opening temp file for: " << inFile << "\n";
-      in.close();
-      continue;
-    }
 
-    out << header << in.rdbuf();
+    if (mode == 1) {
+      /* INSERT */
+      if (headerExists) {
+        std::cout << "skipping: " << inFile << " (header already exists)\n";
+        continue;
+      }
+      out << makeHeader(baseFilename) << in.rdbuf();
+
+    } else if (mode == 2) {
+      /* UPDATE */
+      if (!headerExists) {
+        std::cout << "skipping: " << inFile << " (no header to update)\n";
+        continue;
+      }
+
+      std::string line, existingCreated;
+      for (int i = 0; i < 11; i++) {
+        std::getline(in, line);
+        if (i == 7) {
+          size_t start = line.find("Created: ");
+          size_t end = line.find("by ", start);
+          if (start != std::string::npos && end != std::string::npos) {
+            existingCreated = line.substr(start, end + 3 - start + user.length());
+          }
+        }
+      }
+      out << makeHeader(baseFilename, existingCreated) << in.rdbuf();
+
+    } else if (mode == 3) {
+      /* DELETE */
+      if (!headerExists) {
+        std::cout << "skipping: " << inFile << " (no header to delete)\n";
+        continue;
+      }
+
+      std::string dump;
+      for (int i = 0; i < 12; ++i) {
+        std::getline(in, dump);
+      }
+      out << in.rdbuf();
+    }
 
     in.close();
     out.close();
