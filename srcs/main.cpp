@@ -37,9 +37,21 @@ int main(int argc, char **argv) {
     }
 
     std::string inFile = entry.path().string();
-    std::string tempFile = inFile + "_temp";
+    if (inFile.length() >= 5 && inFile.substr(inFile.length() - 5) == "_temp") {
+      continue;
+    }
 
     bool headerExists = hasHeader(inFile);
+
+    if (mode == 1 && headerExists) {
+      std::cout << "skipping: " << inFile << " (header already exists)\n";
+      continue;
+    }
+    if ((mode == 2 || mode == 3) && !headerExists) {
+      std::cout << "skipping: " << inFile << " (no header to " << (mode == 2 ? "update)\n" : "delete)\n");
+      continue;
+    }
+    std::string tempFile = inFile + "_temp";
     std::string baseFilename = entry.path().filename().string();
 
     std::ifstream in(inFile);
@@ -52,19 +64,10 @@ int main(int argc, char **argv) {
 
     if (mode == 1) {
       /* INSERT */
-      if (headerExists) {
-        std::cout << "skipping: " << inFile << " (header already exists)\n";
-        continue;
-      }
       out << makeHeader(baseFilename, "") << in.rdbuf();
 
     } else if (mode == 2) {
       /* UPDATE */
-      if (!headerExists) {
-        std::cout << "skipping: " << inFile << " (no header to update)\n";
-        continue;
-      }
-
       std::string line, existingCreated;
       for (int i = 0; i < 11; i++) {
         std::getline(in, line);
@@ -83,11 +86,6 @@ int main(int argc, char **argv) {
 
     } else if (mode == 3) {
       /* DELETE */
-      if (!headerExists) {
-        std::cout << "skipping: " << inFile << " (no header to delete)\n";
-        continue;
-      }
-
       std::string dump;
       for (int i = 0; i < 12; ++i) {
         std::getline(in, dump);
