@@ -12,6 +12,23 @@ int main(int argc, char **argv) {
   if (mode == 0) {
     return 1;
   }
+
+  if (mode >= 4 && mode <= 8) {
+    if (mode == 4) { // SET USER
+      updateConfig("USER", argv[3]);
+    } else if (mode == 5) { // SET EMAIL
+      updateConfig("EMAIL", argv[3]);
+    } else if (mode == 6) { // RESET ALL
+      updateConfig("USER", "");
+      updateConfig("EMAIL", "");
+    } else if (mode == 7) { // RESET USER
+      updateConfig("USER", "");
+    } else if (mode == 8) { // RESET EMAIL
+      updateConfig("EMAIL", "");
+    }
+    return 0;
+  }
+
   std::string targetDir = "./target";
 
   for (const auto& entry : fs::directory_iterator(targetDir)) {
@@ -39,7 +56,7 @@ int main(int argc, char **argv) {
         std::cout << "skipping: " << inFile << " (header already exists)\n";
         continue;
       }
-      out << makeHeader(baseFilename) << in.rdbuf();
+      out << makeHeader(baseFilename, "") << in.rdbuf();
 
     } else if (mode == 2) {
       /* UPDATE */
@@ -55,7 +72,10 @@ int main(int argc, char **argv) {
           size_t start = line.find("Created: ");
           size_t end = line.find("by ", start);
           if (start != std::string::npos && end != std::string::npos) {
-            existingCreated = line.substr(start, end + 3 - start + user.length());
+            size_t endOfUser = line.find(' ', end + 3);
+            if (endOfUser != std::string::npos) {
+              existingCreated = line.substr(start, endOfUser - start);
+            }
           }
         }
       }

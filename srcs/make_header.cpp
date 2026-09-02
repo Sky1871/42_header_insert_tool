@@ -48,12 +48,21 @@ CommentStyle getStyle(const std::string& filename) {
 }
 
 std::string makeHeader(const std::string& filename, std::string existingCreated = "") {
-  // 1. Get environment variables
-  const char* user_env = std::getenv("USER");
-  std::string user = user_env ? user_env : "marvin";
-  
-  const char* mail_env = std::getenv("MAIL");
-  std::string mail = mail_env ? mail_env : "marvin@42.fr";
+  // Get environment variables
+  std::string user = "";
+  std::string email = "";
+
+  readConfig(user, email);
+
+  if (user.empty()) {
+    const char* user_env = std::getenv("USER");
+    std::string user = user_env ? user_env : "marvin";
+  }
+
+  if (email.empty()) {
+  const char* email_env = std::getenv("MAIL");
+  std::string email = email_env ? email_env : "marvin@42.fr";
+  }
 
   // 2. Format the date
   std::time_t t = std::time(nullptr);
@@ -62,8 +71,8 @@ std::string makeHeader(const std::string& filename, std::string existingCreated 
   oss << std::put_time(&tm, "%Y/%m/%d %H:%M:%S");
   std::string date = oss.str();
 
-  // 3. Prepare the text variables
-  std::string author = "By: " + user + " <" + mail + ">";
+  // Prepare the text variables
+  std::string author = "By: " + user + " <" + email + ">";
   std::string created;
   if (!existingCreated.empty()) {
     created = existingCreated;
@@ -82,7 +91,7 @@ std::string makeHeader(const std::string& filename, std::string existingCreated 
     "    ###   ########.fr    "
   };
 
-  // 4. Get the comment style for this specific file
+  // Get the comment style for this specific file
   CommentStyle style = getStyle(filename);
   int margin = 5;
 
@@ -93,7 +102,7 @@ std::string makeHeader(const std::string& filename, std::string existingCreated 
     return style.start + " " + fillStr + " " + style.end + "\n";
   };
 
-  // 6. Helper lambda to generate text lines (mimics Vimscript's `s:textline`)
+  // Helper lambda to generate text lines (mimics Vimscript's `s:textline`)
   auto makeLine = [&](std::string left, const std::string& right) {
     left.erase(std::remove(left.begin(), left.end(), '\r'), left.end());
     int maxLeftLen = style.length - (margin * 2) - right.length();
@@ -110,7 +119,7 @@ std::string makeHeader(const std::string& filename, std::string existingCreated 
     return style.start + leftMargin + left + spaces + right + rightMargin + style.end + "\n";
   };
 
-  // 7. Assemble header
+  // Assemble header
   std::string header;
   header += makeBorder();
   header += makeLine("", "");
