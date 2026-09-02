@@ -18,8 +18,8 @@ struct CommentStyle {
 // Helper to determine comment style based on filename/extension
 CommentStyle getStyle(const std::string& filename) {
   auto endsWith = [](const std::string& str, const std::string& suffix) {
-      return str.size() >= suffix.size() && 
-             str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+    return str.size() >= suffix.size() && 
+    str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
   };
 
   // Extension groups
@@ -68,13 +68,13 @@ std::string makeHeader(const std::string& filename) {
   std::string updated = "Updated: " + date + " by " + user;
 
   const std::string ascii[7] = {
-      "        :::      ::::::::",
-      "      :+:      :+:    :+:",
-      "    +:+ +:+         +:+  ",
-      "  +#+  +:+       +#+     ",
-      "+#+#+#+#+#+   +#+        ",
-      "     #+#    #+#          ",
-      "    ###   ########.fr    "
+    "        :::      ::::::::",
+    "      :+:      :+:    :+:",
+    "    +:+ +:+         +:+  ",
+    "  +#+  +:+       +#+     ",
+    "+#+#+#+#+#+   +#+        ",
+    "     #+#    #+#          ",
+    "    ###   ########.fr    "
   };
 
   // 4. Get the comment style for this specific file
@@ -83,26 +83,26 @@ std::string makeHeader(const std::string& filename) {
 
   // 5. Helper lambda to generate top and bottom border lines
   auto makeBorder = [&]() {
-      int fillCount = style.length - style.start.length() - style.end.length() - 2;
-      std::string fillStr(std::max(0, fillCount), style.fill);
-      return style.start + " " + fillStr + " " + style.end + "\n";
+    int fillCount = style.length - style.start.length() - style.end.length() - 2;
+    std::string fillStr(std::max(0, fillCount), style.fill);
+    return style.start + " " + fillStr + " " + style.end + "\n";
   };
 
   // 6. Helper lambda to generate text lines (mimics Vimscript's `s:textline`)
   auto makeLine = [&](std::string left, const std::string& right) {
-      left.erase(std::remove(left.begin(), left.end(), '\r'), left.end());
-      int maxLeftLen = style.length - (margin * 2) - right.length();
-      if (left.length() > (size_t)maxLeftLen) {
-          left = left.substr(0, maxLeftLen);
-      }
+    left.erase(std::remove(left.begin(), left.end(), '\r'), left.end());
+    int maxLeftLen = style.length - (margin * 2) - right.length();
+    if (left.length() > (size_t)maxLeftLen) {
+      left = left.substr(0, maxLeftLen);
+    }
 
-      int spacesCount = style.length - (margin * 2) - left.length() - right.length();
-      std::string spaces(std::max(0, spacesCount), ' ');
+    int spacesCount = style.length - (margin * 2) - left.length() - right.length();
+    std::string spaces(std::max(0, spacesCount), ' ');
       
-      std::string leftMargin(std::max(0, margin - (int)style.start.length()), ' ');
-      std::string rightMargin(std::max(0, margin - (int)style.end.length()), ' ');
+    std::string leftMargin(std::max(0, margin - (int)style.start.length()), ' ');
+    std::string rightMargin(std::max(0, margin - (int)style.end.length()), ' ');
 
-      return style.start + leftMargin + left + spaces + right + rightMargin + style.end + "\n";
+    return style.start + leftMargin + left + spaces + right + rightMargin + style.end + "\n";
   };
 
   // 7. Assemble header
