@@ -7,7 +7,11 @@
 
 namespace fs = std::filesystem;
 
-int main() {
+int main(int argc, char **argv) {
+  int mode = checkArgs(argc, argv);
+  if (mode == 0) {
+    return 1;
+  }
   std::string targetDir = "./target";
 
   for (const auto& entry : fs::directory_iterator(targetDir)) {
@@ -50,5 +54,5 @@ int main() {
 
     std::cout << "Succesfully processed: " << inFile << "\n";
   }
-  return 1;
+  return 0;
 }
