@@ -1,0 +1,135 @@
+{
+    zig_arch_x86_64_plat_linux = {
+        __global = true,
+        __checked = true,
+        zig = "/usr/sbin/zig",
+        zig_version = "0.16.0",
+        plat = "linux",
+        arch = "x86_64"
+    },
+    tool_target_HIT_linux_x86_64_cxx = {
+        toolname = "clangxx",
+        program = "/usr/sbin/clang++",
+        toolchain_info = {
+            arch = "x86_64",
+            cachekey = "clang_arch_x86_64_plat_linux",
+            plat = "linux",
+            name = "clang"
+        }
+    },
+    envs_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    swift_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    go_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    tool_target_HIT_linux_x86_64_ar = {
+        toolname = "ar",
+        program = "/usr/sbin/ar",
+        toolchain_info = {
+            arch = "x86_64",
+            cachekey = "clang_arch_x86_64_plat_linux",
+            plat = "linux",
+            name = "clang"
+        }
+    },
+    gfortran_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    fasm_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    nim_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = false
+    },
+    gcc_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = {
+            program = "/usr/sbin/gcc",
+            name = "gcc"
+        }
+    },
+    ascendc_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = false
+    },
+    cuda_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    dotnet_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = false
+    },
+    yasm_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    fpc_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    cross_arch_x86_64_plat_linux = {
+        __global = true,
+        plat = "linux",
+        arch = "x86_64"
+    },
+    clang_arch_x86_64_plat_linux = {
+        llvm_resourcedir = "/usr/lib/clang/22",
+        llvm_libcxx_static = "/usr/lib64/libc++.a",
+        llvm_libcxxabi_static = "/usr/lib64/libc++abi.a",
+        __checked = {
+            program = "/usr/sbin/clang",
+            name = "clang"
+        },
+        plat = "linux",
+        __global = true,
+        llvm_target_triple = "x86_64-pc-linux-gnu",
+        arch = "x86_64"
+    },
+    nasm_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    },
+    rust_arch_x86_64_plat_linux = {
+        arch = "x86_64",
+        __global = true,
+        plat = "linux",
+        __checked = true
+    }
+}

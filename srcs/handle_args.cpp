@@ -25,6 +25,8 @@ int checkArgs(int ac, char **av) {
       return 4;
     } else if (s_opt == "email") {
       return 5;
+    } else if (s_opt == "root") {
+      return 9;
     }
     std::cerr << "Usage: HIT <set or s> <user or email> <value>\n";
     return 0;
@@ -42,15 +44,16 @@ int checkArgs(int ac, char **av) {
     std::cerr << "Usage: HIT <r or reset> <user or email or EMPTY>\n";
     return 0;
   }
-  std::cerr << "#  Usage: HIT <option>                     #\n";
-  std::cerr << "#  EMPTY -> insert headers                 #\n";
-  std::cerr << "#  u or update -> update existing headers  #\n";
-  std::cerr << "#  d or delete -> delete existing headers  #\n";
-  std::cerr << "#  s or set -> <user> or <email>           #\n";
-  std::cerr << "#   user <value> -> set user to <value>    #\n";
-  std::cerr << "#   email <value> -> set email to <value>  #\n";
-  std::cerr << "#  r or reset -> reset email and user      #\n";
-  std::cerr << "#   user -> reset only user                #\n";
-  std::cerr << "#   email -> reset only email              #\n";
+  std::cerr << "#  Usage: HIT <option>                         #\n";
+  std::cerr << "#  EMPTY -> insert headers                     #\n";
+  std::cerr << "#  u or update -> update existing headers      #\n";
+  std::cerr << "#  d or delete -> delete existing headers      #\n";
+  std::cerr << "#  s or set -> <user> or <email>               #\n";
+  std::cerr << "#   user <value> -> set user to <value>        #\n";
+  std::cerr << "#   email <value> -> set email to <value>      #\n";
+  std::cerr << "#   root <filepath> -> set root to <filepath>  #\n";
+  std::cerr << "#  r or reset -> reset email and user          #\n";
+  std::cerr << "#   user -> reset only user                    #\n";
+  std::cerr << "#   email -> reset only email                  #\n";
   return 0;
 }

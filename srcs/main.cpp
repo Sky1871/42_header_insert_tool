@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  if (mode >= 4 && mode <= 8) {
+  if (mode >= 4 && mode <= 9) {
     if (mode == 4) { // SET USER
       updateConfig("USER", argv[3]);
     } else if (mode == 5) { // SET EMAIL
@@ -25,11 +25,20 @@ int main(int argc, char **argv) {
       updateConfig("USER", "");
     } else if (mode == 8) { // RESET EMAIL
       updateConfig("EMAIL", "");
+    } else if (mode == 9) { // set root
+      updateConfig("ROOT", argv[3]);
     }
     return 0;
   }
 
-  std::string targetDir = "./target";
+  std::string root = readConfig("ROOT");
+  std::string targetDir;
+
+  if (root.empty()) {
+    targetDir = "./target";
+  } else {
+    targetDir = root;
+  }
 
   for (const auto& entry : fs::directory_iterator(targetDir)) {
     if (!entry.is_regular_file()) {
