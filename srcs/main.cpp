@@ -14,22 +14,7 @@ int main(int argc, char **argv) {
   }
 
   if (mode >= 4 && mode <= 10) {
-    if (mode == 4) { // SET USER
-      updateConfig("USER", argv[3]);
-    } else if (mode == 5) { // SET EMAIL
-      updateConfig("EMAIL", argv[3]);
-    } else if (mode == 6) { // RESET ALL
-      updateConfig("USER", "");
-      updateConfig("EMAIL", "");
-    } else if (mode == 7) { // RESET USER
-      updateConfig("USER", "");
-    } else if (mode == 8) { // RESET EMAIL
-      updateConfig("EMAIL", "");
-    } else if (mode == 9) { // set root
-      updateConfig("ROOT", argv[3]);
-    } else if (mode == 10) {
-      updateConfig("ROOT", "");
-    }
+    dataUpdate(mode, argv[3]);
     return 0;
   }
 
@@ -41,6 +26,8 @@ int main(int argc, char **argv) {
   } else {
     targetDir = root;
   }
+
+  std::vector<std::string> ftypes = parser(readConfig("FTYPE"));
 
   for (const auto& entry : fs::directory_iterator(targetDir)) {
     if (!entry.is_regular_file()) {
