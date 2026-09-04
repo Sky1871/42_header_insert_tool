@@ -39,6 +39,8 @@ int checkArgs(int ac, char **av) {
         return 7;
       } else if (r_opt == "email") {
         return 8;
+      } else if (r_opt == "root") {
+        return 10;
       }
     }
     std::cerr << "Usage: HIT <r or reset> <user or email or EMPTY>\n";
@@ -55,5 +57,6 @@ int checkArgs(int ac, char **av) {
   std::cerr << "#  r or reset -> reset email and user          #\n";
   std::cerr << "#   user -> reset only user                    #\n";
   std::cerr << "#   email -> reset only email                  #\n";
+  std::cerr << "#   root -> reset only root                    #\n";
   return 0;
 }

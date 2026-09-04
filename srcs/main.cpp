@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  if (mode >= 4 && mode <= 9) {
+  if (mode >= 4 && mode <= 10) {
     if (mode == 4) { // SET USER
       updateConfig("USER", argv[3]);
     } else if (mode == 5) { // SET EMAIL
@@ -27,6 +27,8 @@ int main(int argc, char **argv) {
       updateConfig("EMAIL", "");
     } else if (mode == 9) { // set root
       updateConfig("ROOT", argv[3]);
+    } else if (mode == 10) {
+      updateConfig("ROOT", "");
     }
     return 0;
   }
