@@ -1,5 +1,5 @@
 USER=kseltenr
 EMAIL=kseltenr@student.42vienna.com
-ROOT=/home/sky/nerdstuff/projects/cpp/42_header_insert_tool/test
+ROOT=/home/sky/nerdstuff/projects/cpp/42_header_insert_tool/target
 EXC_DIR=
-FTYPE=
+FTYPE=c,cpp

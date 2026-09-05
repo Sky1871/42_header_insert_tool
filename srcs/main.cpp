@@ -28,13 +28,30 @@ int main(int argc, char **argv) {
   }
 
   std::vector<std::string> ftypes = parser(readConfig("FTYPE"));
+  std::vector<std::string> exc_dirs = parser(readConfig("EXC_DIR"));
 
   for (const auto& entry : fs::directory_iterator(targetDir)) {
     if (!entry.is_regular_file()) {
       continue;
     }
 
+    if (!ftypes.empty()) {
+      bool validExt = false;
+      std::string ext = entry.path().extension().string();
+
+      for (const auto& type : ftypes) {
+        if (ext == type || ext == "." + type) {
+          validExt = true;
+          break;
+        }
+      }
+      if (!validExt) {
+        continue;
+      }
+    }
+
     std::string inFile = entry.path().string();
+
     if (inFile.length() >= 5 && inFile.substr(inFile.length() - 5) == "_temp") {
       continue;
     }
